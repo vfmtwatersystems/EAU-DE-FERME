@@ -1,234 +1,201 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VFMT Water Systems</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; color: #1a2e3b; background: #f4f8fb; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eau de Ferme - VFMT</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; color: #1a1a2e; }
+        
+        /* NAV */
+        nav {
+            background: #0a1628;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav img { height: 60px; }
+        nav ul { list-style: none; display: flex; gap: 30px; }
+        nav ul a { color: white; text-decoration: none; font-size: 14px; letter-spacing: 1px; }
+        nav ul a:hover { color: #4fc3f7; }
 
-    /* NAV */
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 48px; background: #fff;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100;
-    }
-    nav img { height: 56px; }
-    nav ul { list-style: none; display: flex; gap: 32px; }
-    nav ul li a {
-      text-decoration: none; color: #1a2e3b; font-weight: 600; font-size: 0.95rem;
-      transition: color 0.2s;
-    }
-    nav ul li a:hover { color: #0077b6; }
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #0a1628, #1565c0);
+            color: white;
+            text-align: center;
+            padding: 100px 40px;
+        }
+        .hero h1 { font-size: 48px; margin-bottom: 20px; }
+        .hero p { font-size: 20px; opacity: 0.85; max-width: 700px; margin: 0 auto 40px; }
+        .hero a {
+            background: #4fc3f7;
+            color: #0a1628;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
 
-    /* HERO */
-    .hero {
-      min-height: 88vh; display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(135deg, #0077b6 0%, #00b4d8 60%, #90e0ef 100%);
-      text-align: center; padding: 80px 24px;
-    }
-    .hero-content { max-width: 720px; }
-    .hero h1 { font-size: 3rem; color: #fff; font-weight: 800; line-height: 1.2; margin-bottom: 24px; }
-    .hero p { font-size: 1.2rem; color: #e0f4ff; margin-bottom: 36px; }
-    .hero a {
-      background: #fff; color: #0077b6; padding: 14px 36px;
-      border-radius: 32px; font-weight: 700; text-decoration: none; font-size: 1rem;
-      transition: background 0.2s, color 0.2s;
-    }
-    .hero a:hover { background: #0077b6; color: #fff; }
+        /* SOLUTIONS */
+        .solutions { padding: 80px 40px; background: #f5f9ff; }
+        .solutions h2 { text-align: center; font-size: 36px; margin-bottom: 60px; color: #0a1628; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 220px; object-fit: cover; }
+        .card-body { padding: 25px; }
+        .card-body h3 { font-size: 18px; margin-bottom: 12px; color: #0a1628; }
+        .card-body p { font-size: 14px; color: #555; line-height: 1.7; }
 
-    /* SECTION TITRE */
-    .section { padding: 80px 48px; }
-    .section-title {
-      text-align: center; font-size: 2rem; font-weight: 800;
-      color: #0077b6; margin-bottom: 12px;
-    }
-    .section-subtitle {
-      text-align: center; color: #5a7a8a; margin-bottom: 56px; font-size: 1.05rem;
-    }
-    .divider {
-      width: 64px; height: 4px; background: #0077b6;
-      border-radius: 2px; margin: 0 auto 16px;
-    }
+        /* ABOUT */
+        .about {
+            background: #e3f2fd;
+            padding: 80px 40px;
+            text-align: center;
+        }
+        .about h2 { font-size: 36px; margin-bottom: 25px; color: #0a1628; }
+        .about p { font-size: 16px; max-width: 800px; margin: 0 auto; color: #444; line-height: 1.8; }
 
-    /* GRILLE SOLUTIONS */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
-    .card {
-      background: #fff; border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(0,119,182,0.10); overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(0,119,182,0.18); }
-    .card img { width: 100%; height: 220px; object-fit: cover; display: block; }
-    .card-body { padding: 24px; }
-    .card-body h3 { font-size: 1.1rem; font-weight: 700; color: #0077b6; margin-bottom: 10px; }
-    .card-body p { color: #4a6070; font-size: 0.95rem; line-height: 1.6; }
+        /* CONTACT */
+        .contact { padding: 80px 40px; background: #0a1628; color: white; text-align: center; }
+        .contact h2 { font-size: 36px; margin-bottom: 50px; }
+        .contact-grid { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; }
+        .contact-item h4 { font-size: 18px; margin-bottom: 10px; color: #4fc3f7; }
+        .contact-item p { font-size: 15px; opacity: 0.85; }
 
-    /* ABOUT */
-    .about { background: #e8f4fb; }
-    .about-inner {
-      max-width: 860px; margin: 0 auto; text-align: center;
-    }
-    .about-inner p { font-size: 1.1rem; color: #2d4a5a; line-height: 1.8; }
-
-    /* CONTACT */
-    .contact { background: #0077b6; }
-    .contact .section-title { color: #fff; }
-    .contact .section-subtitle { color: #b3ddf0; }
-    .contact .divider { background: #fff; }
-    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; max-width: 900px; margin: 0 auto; }
-    .contact-card {
-      background: rgba(255,255,255,0.12); border-radius: 14px;
-      padding: 32px 24px; text-align: center; color: #fff;
-    }
-    .contact-card .icon { font-size: 2.2rem; margin-bottom: 14px; }
-    .contact-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-    .contact-card p { font-size: 0.95rem; color: #cceeff; }
-
-    /* FOOTER */
-    footer {
-      text-align: center; padding: 24px;
-      background: #0d1f2d; color: #5a8a9f; font-size: 0.85rem;
-    }
-
-    @media (max-width: 768px) {
-      nav ul { display: none; }
-      .hero h1 { font-size: 2rem; }
-      .section { padding: 48px 20px; }
-    }
-  </style>
+        /* FOOTER */
+        footer { background: #060d1a; color: #888; text-align: center; padding: 20px; font-size: 13px; }
+    </style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
+<!-- NAV -->
 <nav>
-  <img src="images/VFMT (Logo) (1).png" alt="VFMT Water Systems" />
-  <ul>
-    <li><a href="#solutions">Solutions</a></li>
-    <li><a href="#about">À propos</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+    <img src="images/VFMT (Logo) (1).png" alt="Logo VFMT">
+    <ul>
+        <li><a href="#solutions">Nos Solutions</a></li>
+        <li><a href="#about">À Propos</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-content">
-    <h1>L'eau pure, au service de votre activité</h1>
-    <p>VFMT Water Systems conçoit et installe des solutions de traitement d'eau sur mesure pour l'industrie, l'agriculture et le résidentiel.</p>
-    <a href="#solutions">Découvrir nos solutions</a>
-  </div>
+    <h1>Solutions de traitement d'eau pour l'agriculture</h1>
+    <p>VFMT vous accompagne avec des équipements professionnels adaptés aux besoins des exploitations agricoles et industrielles.</p>
+    <a href="#contact">Nous contacter</a>
 </section>
 
 <!-- SOLUTIONS -->
-<section class="section" id="solutions">
-  <div class="divider"></div>
-  <h2 class="section-title">Nos Solutions</h2>
-  <p class="section-subtitle">Des équipements professionnels adaptés à chaque besoin</p>
+<section class="solutions" id="solutions">
+    <h2>Nos Solutions</h2>
+    <div class="grid">
 
-  <div class="grid">
+        <div class="card">
+            <img src="images/IMG_2578.JPG" alt="Système de pompage couplé">
+            <div class="card-body">
+                <h3>Système de pompage couplé</h3>
+                <p>Installation de pompage haute performance pour une alimentation en eau fiable et continue sur votre exploitation.</p>
+            </div>
+        </div>
 
-    <div class="card">
-      <img src="images/IMG_2578.JPG" alt="Système de pompage couplé" />
-      <div class="card-body">
-        <h3>Système de pompage couplé</h3>
-        <p>Installation de pompage sur mesure pour alimenter vos réseaux en eau avec fiabilité et performance, adaptée à tous débits.</p>
-      </div>
+        <div class="card">
+            <img src="images/MO2 TP5 ecosoft.jpg" alt="Osmose inverse industrielle">
+            <div class="card-body">
+                <h3>Osmose inverse industrielle</h3>
+                <p>Skid de filtration par osmose inverse avec membrane 8" pour un débit pouvant atteindre 4 m³/h. Eau pure, process industriel.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="images/Nourrice répartition.jpg" alt="Nourrice de répartition">
+            <div class="card-body">
+                <h3>Nourrice de répartition</h3>
+                <p>Nourrice équipée d'un compteur volumétrique pour une distribution précise et contrôlée de l'eau sur l'ensemble du réseau.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="images/adou twin.jpg" alt="Adoucisseurs Twin 18">
+            <div class="card-body">
+                <h3>Adoucisseurs Twin 18</h3>
+                <p>Montage en parallèle de 2 bouteilles adoucisseurs pour un adoucissement en continu sans interruption de service.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="images/container Aisy.jpg" alt="Container maritime de stockage">
+            <div class="card-body">
+                <h3>Container de stockage extérieur</h3>
+                <p>Container maritime aménagé en extérieur pour abriter et protéger votre filière complète de traitement d'eau.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="images/int. aquaphyto recond..jpg" alt="Réseau eau adoucie et pompes doseuses">
+            <div class="card-body">
+                <h3>Réseau eau adoucie & dosage pH</h3>
+                <p>Réseau d'eau adoucie couplé à des pompes doseuses pour ajuster précisément le pH selon vos besoins de production.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="images/stockage eau.jpg" alt="Cuve de stockage aérienne">
+            <div class="card-body">
+                <h3>Cuve de stockage aérienne</h3>
+                <p>Cuve de stockage d'eau en position aérienne pour une réserve disponible à tout moment sur votre site.</p>
+            </div>
+        </div>
+
     </div>
-
-    <div class="card">
-      <img src="images/MO2 TP5 ecosoft.jpg" alt="Osmose inverse industrielle" />
-      <div class="card-body">
-        <h3>Osmose inverse industrielle</h3>
-        <p>Skid de filtration par membrane 8" pour des débits jusqu'à 4 m³/h. Traitement de l'eau à haute pureté pour process industriel.</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="images/Nourrice répartition.jpg" alt="Nourrice de répartition" />
-      <div class="card-body">
-        <h3>Nourrice de répartition</h3>
-        <p>Distribution équilibrée de l'eau avec compteur volumétrique intégré pour un contrôle précis de chaque point de consommation.</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="images/adou twin.jpg" alt="Adoucisseurs Twin 18 pouces" />
-      <div class="card-body">
-        <h3>Adoucisseurs Twin 18"</h3>
-        <p>Montage en double bouteille pour un adoucissement en continu sans interruption de service, idéal pour les forts volumes.</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="images/container Aisy.jpg" alt="Container maritime traitement d'eau" />
-      <div class="card-body">
-        <h3>Container de traitement d'eau</h3>
-        <p>Filière complète de traitement intégrée dans un container maritime, posé en extérieur. Autonome, robuste et transportable.</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="images/int. aquaphyto recond..jpg" alt="Réseau eau adoucie et pompes doseuses" />
-      <div class="card-body">
-        <h3>Réseau eau adoucie &amp; dosage pH</h3>
-        <p>Réseau d'eau adoucie couplé à des pompes doseuses pour ajuster précisément le pH, à la hausse ou à la baisse selon vos besoins.</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="images/stockage eau.jpg" alt="Cuve de stockage aérienne" />
-      <div class="card-body">
-        <h3>Stockage eau aérien</h3>
-        <p>Cuves de stockage aériennes pour constituer des réserves d'eau traitée disponibles à tout moment pour votre exploitation.</p>
-      </div>
-    </div>
-
-  </div>
 </section>
 
-<!-- À PROPOS -->
-<section class="section about" id="about">
-  <div class="divider"></div>
-  <h2 class="section-title">À propos de VFMT</h2>
-  <p class="section-subtitle">Notre engagement qualité</p>
-  <div class="about-inner">
-    <p>
-      VFMT Water Systems est un bureau d'études et d'installation spécialisé dans le traitement de l'eau.
-      Nous accompagnons nos clients de la conception à la mise en service, en proposant des équipements
-      durables et performants. Qu'il s'agisse d'osmose inverse, d'adoucissement, de pompage ou de stockage,
-      chaque installation est conçue sur mesure pour répondre à vos contraintes techniques et économiques.
-    </p>
-  </div>
+<!-- ABOUT -->
+<section class="about" id="about">
+    <h2>À Propos de VFMT</h2>
+    <p>VFMT est spécialisé dans la conception et l'installation de solutions de traitement d'eau pour les exploitations agricoles et les process industriels. Notre expertise couvre l'adoucissement, la filtration, l'osmose inverse et la gestion des réseaux d'eau pour optimiser votre production tout en respectant l'environnement.</p>
 </section>
 
 <!-- CONTACT -->
-<section class="section contact" id="contact">
-  <div class="divider"></div>
-  <h2 class="section-title">Contactez-nous</h2>
-  <p class="section-subtitle">Notre équipe répond à toutes vos demandes</p>
-  <div class="contact-grid">
-    <div class="contact-card">
-      <div class="icon">📍</div>
-      <h4>Adresse</h4>
-      <p>France</p>
+<section class="contact" id="contact">
+    <h2>Nous Contacter</h2>
+    <div class="contact-grid">
+        <div class="contact-item">
+            <h4>📍 Adresse</h4>
+            <p>France</p>
+        </div>
+        <div class="contact-item">
+            <h4>📞 Téléphone</h4>
+            <p>+33 (0)X XX XX XX XX</p>
+        </div>
+        <div class="contact-item">
+            <h4>✉️ Email</h4>
+            <p>contact@vfmt.fr</p>
+        </div>
     </div>
-    <div class="contact-card">
-      <div class="icon">📞</div>
-      <h4>Téléphone</h4>
-      <p>+33 (0) _ _ _ _ _ _ _ _</p>
-    </div>
-    <div class="contact-card">
-      <div class="icon">✉️</div>
-      <h4>Email</h4>
-      <p>contact@vfmt-water.fr</p>
-    </div>
-  </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <p>© 2025 VFMT Water Systems — Tous droits réservés</p>
+    <p>© 2024 VFMT — Tous droits réservés</p>
 </footer>
 
 </body>
