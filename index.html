@@ -3,199 +3,913 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eau de Ferme - VFMT</title>
+    <title>VFMT - Traitement d'Eau</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; color: #1a1a2e; }
-        
-        /* NAV */
-        nav {
-            background: #0a1628;
-            padding: 15px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+
+        :root {
+            --blue-dark: #0a2540;
+            --blue-mid: #1a4a7a;
+            --blue-light: #2980b9;
+            --cyan: #00b4d8;
+            --white: #ffffff;
+            --light-bg: #f0f7ff;
+            --gray: #6c757d;
         }
-        nav img { height: 60px; }
-        nav ul { list-style: none; display: flex; gap: 30px; }
-        nav ul a { color: white; text-decoration: none; font-size: 14px; letter-spacing: 1px; }
-        nav ul a:hover { color: #4fc3f7; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--blue-dark);
+            background: var(--white);
+        }
+
+        /* NAVBAR */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 37, 64, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 18px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo img {
+            height: 45px;
+            object-fit: contain;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 35px;
+        }
+
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover { color: var(--cyan); }
+
+        .nav-cta {
+            background: var(--cyan);
+            color: var(--blue-dark) !important;
+            padding: 10px 22px;
+            border-radius: 25px;
+            font-weight: 700 !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--white) !important;
+        }
 
         /* HERO */
         .hero {
-            background: linear-gradient(135deg, #0a1628, #1565c0);
-            color: white;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 50%, var(--blue-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 100px 40px;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 20px 60px;
         }
-        .hero h1 { font-size: 48px; margin-bottom: 20px; }
-        .hero p { font-size: 20px; opacity: 0.85; max-width: 700px; margin: 0 auto 40px; }
-        .hero a {
-            background: #4fc3f7;
-            color: #0a1628;
-            padding: 15px 40px;
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0,180,216,0.15) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(0,180,216,0.2);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span { color: var(--cyan); }
+
+        .hero p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--cyan);
+            color: var(--blue-dark);
+            padding: 15px 35px;
             border-radius: 30px;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0,180,216,0.4);
         }
 
-        /* SOLUTIONS */
-        .solutions { padding: 80px 40px; background: #f5f9ff; }
-        .solutions h2 { text-align: center; font-size: 36px; margin-bottom: 60px; color: #0a1628; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,180,216,0.5);
         }
-        .card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: transform 0.3s;
-        }
-        .card:hover { transform: translateY(-5px); }
-        .card img { width: 100%; height: 220px; object-fit: cover; }
-        .card-body { padding: 25px; }
-        .card-body h3 { font-size: 18px; margin-bottom: 12px; color: #0a1628; }
-        .card-body p { font-size: 14px; color: #555; line-height: 1.7; }
 
-        /* ABOUT */
-        .about {
-            background: #e3f2fd;
-            padding: 80px 40px;
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            padding: 15px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            border: 2px solid rgba(255,255,255,0.4);
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--white);
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* USAGES */
+        .usages {
+            background: var(--blue-dark);
+            padding: 30px 60px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .usage-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .usage-item .icon { font-size: 20px; }
+
+        /* SECTION GÉNÉRIQUE */
+        section { padding: 90px 60px; }
+
+        .section-header {
             text-align: center;
+            margin-bottom: 60px;
         }
-        .about h2 { font-size: 36px; margin-bottom: 25px; color: #0a1628; }
-        .about p { font-size: 16px; max-width: 800px; margin: 0 auto; color: #444; line-height: 1.8; }
+
+        .section-label {
+            color: var(--cyan);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-header h2 {
+            font-size: 38px;
+            font-weight: 800;
+            color: var(--blue-dark);
+            line-height: 1.3;
+        }
+
+        .section-header p {
+            font-size: 17px;
+            color: var(--gray);
+            margin-top: 15px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* SOLUTIONS / CARDS AVEC IMAGES */
+        .forage { background: var(--light-bg); }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            border-top: 4px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            border-top-color: var(--cyan);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .service-card-body {
+            padding: 25px;
+        }
+
+        .service-card h3 {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--blue-dark);
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* TRAITEMENTS */
+        .traitements { background: var(--white); }
+
+        .traitement-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .step-card {
+            background: var(--light-bg);
+            border-radius: 16px;
+            padding: 35px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .step-card:hover {
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+        }
+
+        .step-card:hover h3,
+        .step-card:hover ul li { color: rgba(255,255,255,0.9); }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 30px;
+            background: var(--cyan);
+            color: var(--blue-dark);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .step-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--blue-dark);
+            margin-bottom: 15px;
+            margin-top: 10px;
+        }
+
+        .step-card ul { list-style: none; padding: 0; }
+
+        .step-card ul li {
+            font-size: 14px;
+            color: var(--gray);
+            padding: 4px 0 4px 18px;
+            position: relative;
+        }
+
+        .step-card ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--cyan);
+        }
+
+        /* ANOLYTE */
+        .anolyte {
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+            color: var(--white);
+        }
+
+        .anolyte .section-header h2 { color: var(--white); }
+        .anolyte .section-header p { color: rgba(255,255,255,0.7); }
+
+        .anolyte-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .anolyte-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .anolyte-feature {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(0,180,216,0.3);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .anolyte-feature .feat-icon { font-size: 24px; margin-bottom: 10px; }
+
+        .anolyte-feature h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--cyan);
+            margin-bottom: 6px;
+        }
+
+        .anolyte-feature p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+        }
+
+        .applications-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .app-item {
+            background: rgba(255,255,255,0.06);
+            border-left: 3px solid var(--cyan);
+            border-radius: 0 10px 10px 0;
+            padding: 15px 20px;
+        }
+
+        .app-item h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--cyan);
+            margin-bottom: 4px;
+        }
+
+        .app-item p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+        }
+
+        /* ÉQUIPEMENTS */
+        .equipements { background: var(--light-bg); }
+
+        .equipements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .equip-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 30px 25px;
+            text-align: center;
+            box-shadow: 0 3px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+        }
+
+        .equip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .equip-icon { font-size: 36px; margin-bottom: 15px; }
+
+        .equip-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--blue-dark);
+        }
 
         /* CONTACT */
-        .contact { padding: 80px 40px; background: #0a1628; color: white; text-align: center; }
-        .contact h2 { font-size: 36px; margin-bottom: 50px; }
-        .contact-grid { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; }
-        .contact-item h4 { font-size: 18px; margin-bottom: 10px; color: #4fc3f7; }
-        .contact-item p { font-size: 15px; opacity: 0.85; }
+        .contact { background: var(--white); }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-info h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--blue-dark);
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .contact-badge {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .contact-badge h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .contact-badge p {
+            font-size: 14px;
+            color: var(--blue-dark);
+            margin: 0;
+        }
+
+        .contact-form {
+            background: var(--light-bg);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .form-group { margin-bottom: 20px; }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--blue-dark);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid rgba(10,37,64,0.1);
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+            background: var(--white);
+            color: var(--blue-dark);
+            transition: border-color 0.3s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus { border-color: var(--cyan); }
+
+        .form-group textarea { min-height: 130px; resize: vertical; }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--blue-light), var(--cyan));
+            color: var(--white);
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,180,216,0.4);
+        }
 
         /* FOOTER */
-        footer { background: #060d1a; color: #888; text-align: center; padding: 20px; font-size: 13px; }
+        footer {
+            background: var(--blue-dark);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 30px 60px;
+            font-size: 14px;
+        }
+
+        footer span { color: var(--cyan); }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            nav { padding: 15px 25px; }
+            nav ul { display: none; }
+            section { padding: 60px 25px; }
+            .hero h1 { font-size: 34px; }
+            .anolyte-grid { grid-template-columns: 1fr; }
+            .contact-wrapper { grid-template-columns: 1fr; }
+            .usages { padding: 20px 25px; gap: 20px; }
+        }
     </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- NAVBAR -->
 <nav>
-    <img src="images/VFMT (Logo) (1).png" alt="Logo VFMT">
+    <div class="logo">
+        <img src="VFMT%20(Logo)%20(1).png" alt="VFMT Logo">
+    </div>
     <ul>
-        <li><a href="#solutions">Nos Solutions</a></li>
-        <li><a href="#about">À Propos</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#forage">Nos Solutions</a></li>
+        <li><a href="#traitements">Traitements</a></li>
+        <li><a href="#anolyte">Désinfection</a></li>
+        <li><a href="#equipements">Équipements</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
     </ul>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-    <h1>Solutions de traitement d'eau pour l'agriculture</h1>
-    <p>VFMT vous accompagne avec des équipements professionnels adaptés aux besoins des exploitations agricoles et industrielles.</p>
-    <a href="#contact">Nous contacter</a>
+    <div class="hero-content">
+        <div class="hero-badge">💧 Expert en traitement d'eau</div>
+        <h1>Maîtrisez la qualité de<br><span>votre eau</span> pour performer</h1>
+        <p>Solutions complètes de pompage, filtration, traitement et désinfection<br>
+        pour l'agriculture, l'agroalimentaire et l'industrie.</p>
+        <div class="hero-buttons">
+            <a href="#forage" class="btn-primary">Découvrir nos solutions</a>
+            <a href="#contact" class="btn-secondary">Demander une analyse</a>
+        </div>
+    </div>
 </section>
 
-<!-- SOLUTIONS -->
-<section class="solutions" id="solutions">
-    <h2>Nos Solutions</h2>
-    <div class="grid">
+<!-- USAGES -->
+<div class="usages">
+    <div class="usage-item"><span class="icon">🌱</span> Ferti-irrigation</div>
+    <div class="usage-item"><span class="icon">💊</span> Eau de bouillie</div>
+    <div class="usage-item"><span class="icon">🐄</span> Abreuvement</div>
+    <div class="usage-item"><span class="icon">🚿</span> Lavage avant conditionnement</div>
+    <div class="usage-item"><span class="icon">🏭</span> Process industriel</div>
+</div>
 
-        <div class="card">
-            <img src="images/IMG_2578.JPG" alt="Système de pompage couplé">
-            <div class="card-body">
+<!-- SOLUTIONS EAU DE FERME -->
+<section class="forage" id="forage">
+    <div class="section-header">
+        <div class="section-label">Nos réalisations</div>
+        <h2>Solutions complètes pour<br>votre eau de ferme</h2>
+        <p>Du forage à la distribution, nous concevons et installons des systèmes
+        sur mesure adaptés à vos besoins.</p>
+    </div>
+    <div class="services-grid">
+
+        <div class="service-card">
+            <img src="IMG_2578.JPG" alt="Système de pompage couplé">
+            <div class="service-card-body">
                 <h3>Système de pompage couplé</h3>
                 <p>Installation de pompage haute performance pour une alimentation en eau fiable et continue sur votre exploitation.</p>
             </div>
         </div>
 
-        <div class="card">
-            <img src="images/MO2 TP5 ecosoft.jpg" alt="Osmose inverse industrielle">
-            <div class="card-body">
+        <div class="service-card">
+            <img src="MO2%20TP5%20ecosoft.jpg" alt="Osmose inverse industrielle">
+            <div class="service-card-body">
                 <h3>Osmose inverse industrielle</h3>
                 <p>Skid de filtration par osmose inverse avec membrane 8" pour un débit pouvant atteindre 4 m³/h. Eau pure, process industriel.</p>
             </div>
         </div>
 
-        <div class="card">
-            <img src="images/Nourrice répartition.jpg" alt="Nourrice de répartition">
-            <div class="card-body">
+        <div class="service-card">
+            <img src="Nourrice%20r%C3%A9partition.jpg" alt="Nourrice de répartition">
+            <div class="service-card-body">
                 <h3>Nourrice de répartition</h3>
                 <p>Nourrice équipée d'un compteur volumétrique pour une distribution précise et contrôlée de l'eau sur l'ensemble du réseau.</p>
             </div>
         </div>
 
-        <div class="card">
-            <img src="images/adou twin.jpg" alt="Adoucisseurs Twin 18">
-            <div class="card-body">
+        <div class="service-card">
+            <img src="adou%20twin.jpg" alt="Adoucisseurs Twin 18">
+            <div class="service-card-body">
                 <h3>Adoucisseurs Twin 18</h3>
                 <p>Montage en parallèle de 2 bouteilles adoucisseurs pour un adoucissement en continu sans interruption de service.</p>
             </div>
         </div>
 
-        <div class="card">
-            <img src="images/container Aisy.jpg" alt="Container maritime de stockage">
-            <div class="card-body">
+        <div class="service-card">
+            <img src="container%20Aisy.jpg" alt="Container de stockage extérieur">
+            <div class="service-card-body">
                 <h3>Container de stockage extérieur</h3>
                 <p>Container maritime aménagé en extérieur pour abriter et protéger votre filière complète de traitement d'eau.</p>
             </div>
         </div>
 
-        <div class="card">
-            <img src="images/int. aquaphyto recond..jpg" alt="Réseau eau adoucie et pompes doseuses">
-            <div class="card-body">
+        <div class="service-card">
+            <img src="stockage%20eau.jpg" alt="Réseau eau adoucie & dosage pH">
+            <div class="service-card-body">
                 <h3>Réseau eau adoucie & dosage pH</h3>
                 <p>Réseau d'eau adoucie couplé à des pompes doseuses pour ajuster précisément le pH selon vos besoins de production.</p>
             </div>
         </div>
 
-        <div class="card">
-            <img src="images/stockage eau.jpg" alt="Cuve de stockage aérienne">
-            <div class="card-body">
-                <h3>Cuve de stockage aérienne</h3>
-                <p>Cuve de stockage d'eau en position aérienne pour une réserve disponible à tout moment sur votre site.</p>
+        <div class="service-card">
+            <img src="int.%20aquaphyto%20recond..jpg" alt="Installation aquaphyto">
+            <div class="service-card-body">
+                <h3>Installation aquaphyto reconditionnée</h3>
+                <p>Système de traitement aquaphyto reconditionné pour une gestion optimale des eaux de process en agriculture.</p>
             </div>
         </div>
 
     </div>
 </section>
 
-<!-- ABOUT -->
-<section class="about" id="about">
-    <h2>À Propos de VFMT</h2>
-    <p>VFMT est spécialisé dans la conception et l'installation de solutions de traitement d'eau pour les exploitations agricoles et les process industriels. Notre expertise couvre l'adoucissement, la filtration, l'osmose inverse et la gestion des réseaux d'eau pour optimiser votre production tout en respectant l'environnement.</p>
+<!-- ÉTAPES DE TRAITEMENT -->
+<section class="traitements" id="traitements">
+    <div class="section-header">
+        <div class="section-label">Nos technologies de filtration</div>
+        <h2>Un traitement adapté à chaque<br>problématique d'eau</h2>
+        <p>De la préfiltration à l'osmose inverse, nous sélectionnons la technologie
+        la plus adaptée à votre analyse d'eau.</p>
+    </div>
+    <div class="traitement-steps">
+
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Préfiltration & Clarification</h3>
+            <ul>
+                <li>Filtration sur sable, quartz, roche minérale</li>
+                <li>Neutralisation des particules fines</li>
+                <li>Traitement de la turbidité et des MES</li>
+                <li>Élimination des colloïdes (argiles)</li>
+                <li>Rend l'eau parfaitement limpide et claire</li>
+            </ul>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Déferrisation & Démanganisation</h3>
+            <ul>
+                <li>Analyse : Fer, Manganèse, O₂ dissout</li>
+                <li>Mesure pH / Redox</li>
+                <li>Oxygénation par injection d'air comprimé</li>
+                <li>Bactéries déferrisantes sur média bi-couche</li>
+                <li>Filtre catalytique en continu</li>
+            </ul>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Adoucissement</h3>
+            <ul>
+                <li>Mesure TH, TAC, conductivité</li>
+                <li>Résine échangeuse d'ions</li>
+                <li>Adoucisseur simplex ou twin (continu)</li>
+                <li>Élimination calcaire et magnésium</li>
+                <li>Régénération automatique au sel</li>
+            </ul>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">4</div>
+            <h3>Osmose Inverse</h3>
+            <ul>
+                <li>Réduction conductivité, nitrates, pesticides</li>
+                <li>Membranes 4" à 8" selon débit requis</li>
+                <li>Eau ultra-pure pour process sensibles</li>
+                <li>Monitoring en temps réel</li>
+                <li>Débit jusqu'à 4 m³/h</li>
+            </ul>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">5</div>
+            <h3>Désinfection UV & Chlore</h3>
+            <ul>
+                <li>Lampe UV haute intensité</li>
+                <li>Injection chlore ou hypochlorite</li>
+                <li>Élimination bactéries et virus</li>
+                <li>Dosage automatique selon débit</li>
+                <li>Conforme normes sanitaires</li>
+            </ul>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">6</div>
+            <h3>Correction pH & Reminéralisation</h3>
+            <ul>
+                <li>Pompes doseuses acide/base</li>
+                <li>Filtre calcaire remineralisateur</li>
+                <li>Ajustement précis selon culture</li>
+                <li>Compatible ferti-irrigation</li>
+                <li>Contrôle pH en continu</li>
+            </ul>
+        </div>
+
+    </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact" id="contact">
-    <h2>Nous Contacter</h2>
-    <div class="contact-grid">
-        <div class="contact-item">
-            <h4>📍 Adresse</h4>
-            <p>France</p>
+<!-- EAU ÉLECTROACTIVÉE -->
+<section class="anolyte" id="anolyte">
+    <div class="section-header">
+        <div class="section-label">Technologie innovante</div>
+        <h2>Eau électroactivée — Anolyte</h2>
+        <p>Solution de désinfection écologique produite sur site par électroactivation
+        de l'eau salée. Puissante, biodégradable, sans résidus chimiques.</p>
+    </div>
+    <div class="anolyte-grid">
+        <div>
+            <div class="anolyte-features">
+                <div class="anolyte-feature">
+                    <div class="feat-icon">⚡</div>
+                    <h4>Fort pouvoir oxydant</h4>
+                    <p>Acide hypochloreux (HOCl), pH adaptable selon application</p>
+                </div>
+                <div class="anolyte-feature">
+                    <div class="feat-icon">🏭</div>
+                    <h4>Production sur site</h4>
+                    <p>Fabrication et stockage autonomes, injection directe dans le réseau</p>
+                </div>
+                <div class="anolyte-feature">
+                    <div class="feat-icon">🌿</div>
+                    <h4>100% biodégradable</h4>
+                    <p>Solution écologique et économique, sans résidus chimiques</p>
+                </div>
+                <div class="anolyte-feature">
+                    <div class="feat-icon">🔬</div>
+                    <h4>Réglage sur mesure</h4>
+                    <p>Dosage ajusté selon analyse microbiologique de l'eau</p>
+                </div>
+            </div>
         </div>
-        <div class="contact-item">
-            <h4>📞 Téléphone</h4>
-            <p>+33 (0)X XX XX XX XX</p>
-        </div>
-        <div class="contact-item">
-            <h4>✉️ Email</h4>
-            <p>contact@vfmt.fr</p>
+        <div class="applications-list">
+            <div class="app-item">
+                <h4>🌾 Agriculture</h4>
+                <p>Désinfection eau d'irrigation, abreuvement animal, amélioration santé du troupeau, contrôle maladies et parasites</p>
+            </div>
+            <div class="app-item">
+                <h4>🍎 Agroalimentaire</h4>
+                <p>Lavage fruits, légumes, viandes, poissons. Nettoyage en place (CIP) brasseries. Désinfection surfaces et emballages</p>
+            </div>
+            <div class="app-item">
+                <h4>🏥 Santé & Médical</h4>
+                <p>Désinfection surfaces et air hôpitaux, stérilisation à froid instruments médicaux, désinfection du linge</p>
+            </div>
+            <div class="app-item">
+                <h4>🏗️ Industrie & Tertiaire</h4>
+                <p>Contrôle légionelle, tours de refroidissement, industrie pétrolière, gazière et marine, bâtiments publics</p>
+            </div>
         </div>
     </div>
 </section>
 
+<!-- ÉQUIPEMENTS -->
+<section class="equipements" id="equipements">
+    <div class="section-header">
+        <div class="section-label">Équipements & Automatismes</div>
+        <h2>Des installations clé en main<br>connectées et sécurisées</h2>
+    </div>
+    <div class="equipements-grid">
+        <div class="equip-card">
+            <div class="equip-icon">🛡️</div>
+            <h4>Contrôleur & Protection pompe</h4>
+        </div>
+        <div class="equip-card">
+            <div class="equip-icon">💧</div>
+            <h4>Sécurité manque d'eau</h4>
+        </div>
+        <div class="equip-card">
+            <div class="equip-icon">⚙️</div>
+            <h4>Automatismes</h4>
+        </div>
+        <div class="equip-card">
+            <div class="equip-icon">📡</div>
+            <h4>Compteurs & Sondes connectés</h4>
+        </div>
+        <div class="equip-card">
+            <div class="equip-icon">📦</div>
+            <h4>Stockage en container clé en main</h4>
+        </div>
+        <div class="equip-card">
+            <div class="equip-icon">🏗️</div>
+            <h4>Intégration bâtiment</h4>
+        </div>
+        <div class="equip-card">
+            <div class="equip-icon">🔩</div>
+            <h4>Plateforme galvanisée</h4>
+        </div>
+        <div class="equip-card">
+            <div class="equip-icon">🗂️</div>
+            <h4>Gestion de cuves</h4>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+    <div class="section-header">
+        <div class="section-label">Nous contacter</div>
+        <h2>Parlons de votre projet eau</h2>
+        <p>Envoyez-nous votre analyse d'eau ou décrivez votre problématique,
+        nous vous répondons rapidement avec une solution adaptée.</p>
+    </div>
+    <div class="contact-wrapper">
+        <div class="contact-info">
+            <h3>Pourquoi nous choisir ?</h3>
+            <p>Chaque installation est conçue sur mesure, après analyse de votre eau
+            et étude de vos besoins spécifiques selon vos ateliers de production.</p>
+            <div class="contact-badge">
+                <h4>🔬 Diagnostic</h4>
+                <p>Analyse d'eau complète avant toute préconisation</p>
+            </div>
+            <div class="contact-badge">
+                <h4>🔧 Clé en main</h4>
+                <p>De l'étude à la mise en service et la maintenance</p>
+            </div>
+            <div class="contact-badge">
+                <h4>🌿 Éco-responsable</h4>
+                <p>Solutions biodégradables et économes en ressources</p>
+            </div>
+        </div>
+        <div class="contact-form">
+            <form>
+                <div class="form-group">
+                    <label>Nom *</label>
+                    <input type="text" placeholder="Votre nom et prénom">
+                </div>
+                <div class="form-group">
+                    <label>Adresse e-mail *</label>
+                    <input type="email" placeholder="votre@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Votre message</label>
+                    <textarea placeholder="Décrivez votre projet, votre problématique eau, ou joignez une analyse si disponible..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">✉️ Envoyer le message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-    <p>© 2024 VFMT — Tous droits réservés</p>
+    <p>© 2024 <span>VFMT</span> — Solutions de traitement d'eau pour l'agriculture, l'agroalimentaire et l'industrie.</p>
 </footer>
 
 </body>
