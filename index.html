@@ -416,6 +416,67 @@
             line-height: 1.5;
         }
 
+        /* USAGES VISUELS */
+        .usages-visuels {
+            background: var(--white);
+            padding: 90px 60px;
+        }
+
+        .usages-visuels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .usage-visuel-card {
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            height: 240px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .usage-visuel-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .usage-visuel-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s;
+        }
+
+        .usage-visuel-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .usage-visuel-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(10,37,64,0.85));
+            padding: 25px 20px 20px;
+        }
+
+        .usage-visuel-overlay h3 {
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .usage-visuel-overlay span {
+            color: var(--cyan);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
         /* ÉQUIPEMENTS */
         .equipements { background: var(--light-bg); }
 
@@ -565,6 +626,7 @@
             nav { padding: 15px 25px; }
             nav ul { display: none; }
             section { padding: 60px 25px; }
+            .usages-visuels { padding: 60px 25px; }
             .hero h1 { font-size: 34px; }
             .anolyte-grid { grid-template-columns: 1fr; }
             .contact-wrapper { grid-template-columns: 1fr; }
@@ -674,6 +736,22 @@
             <div class="service-card-body">
                 <h3>Installation aquaphyto reconditionnée</h3>
                 <p>Système de traitement aquaphyto reconditionné pour une gestion optimale des eaux de process en agriculture.</p>
+            </div>
+        </div>
+
+        <div class="service-card">
+            <img src="cuve%20sur%20plateforme%20module%20de%20traitement.jpg" alt="Cuve sur plateforme module de traitement">
+            <div class="service-card-body">
+                <h3>Module de traitement sur plateforme</h3>
+                <p>Cuve de stockage intégrée sur plateforme galvanisée avec module de traitement complet, prête à installer sur site.</p>
+            </div>
+        </div>
+
+        <div class="service-card">
+            <img src="monitoring%20process%20traitement%20eau.jpg" alt="Monitoring process traitement eau">
+            <div class="service-card-body">
+                <h3>Monitoring & pilotage process</h3>
+                <p>Supervision en temps réel de votre installation : débits, pH, conductivité, niveaux — pour un pilotage précis et sécurisé.</p>
             </div>
         </div>
 
@@ -816,6 +894,59 @@
                 <p>Contrôle légionelle, tours de refroidissement, industrie pétrolière, gazière et marine, bâtiments publics</p>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- USAGES EN IMAGES -->
+<section class="usages-visuels">
+    <div class="section-header">
+        <div class="section-label">Nos domaines d'application</div>
+        <h2>L'eau traitée au cœur de<br>chaque filière agricole</h2>
+        <p>De l'irrigation sous serre au lavage de légumes, nos solutions accompagnent
+        chaque étape de votre production.</p>
+    </div>
+    <div class="usages-visuels-grid">
+
+        <div class="usage-visuel-card">
+            <img src="fraises%20hors%20sol%20serre%20ferti-irrigation.jpg" alt="Ferti-irrigation fraises hors sol">
+            <div class="usage-visuel-overlay">
+                <span>Hors-sol & Serre</span>
+                <h3>Ferti-irrigation fraises</h3>
+            </div>
+        </div>
+
+        <div class="usage-visuel-card">
+            <img src="sprayer%20arrosage%20traitement%20sous%20serre.jpg" alt="Sprayer arrosage sous serre">
+            <div class="usage-visuel-overlay">
+                <span>Traitement & Désinfection</span>
+                <h3>Arrosage traitement sous serre</h3>
+            </div>
+        </div>
+
+        <div class="usage-visuel-card">
+            <img src="pulv%C3%A9risation%20traitement%20sur%20c%C3%A9r%C3%A9ales.jpg" alt="Pulvérisation sur céréales">
+            <div class="usage-visuel-overlay">
+                <span>Grandes cultures</span>
+                <h3>Pulvérisation sur céréales</h3>
+            </div>
+        </div>
+
+        <div class="usage-visuel-card">
+            <img src="vache%20%C3%A0%20l%27abreuvoir.jpg" alt="Abreuvement bovin">
+            <div class="usage-visuel-overlay">
+                <span>Élevage</span>
+                <h3>Eau d'abreuvement bovin</h3>
+            </div>
+        </div>
+
+        <div class="usage-visuel-card">
+            <img src="convoyeur%20pommes%20de%20terre%20lavage.jpg" alt="Lavage pommes de terre">
+            <div class="usage-visuel-overlay">
+                <span>Agroalimentaire</span>
+                <h3>Lavage avant conditionnement</h3>
+            </div>
+        </div>
+
     </div>
 </section>
 
